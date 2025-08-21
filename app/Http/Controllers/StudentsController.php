@@ -61,4 +61,10 @@ class StudentsController extends Controller
         $student->delete();
         return redirect()->route('students.index')->with('success', 'Student deleted successfully');
     }
+    public function myProfile()
+{
+    $student = auth()->user()->student; // assuming relation exists
+    return view('students.my-profile', compact('student'));
+}
+
 }
