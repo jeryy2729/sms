@@ -25,12 +25,31 @@
                     <span>Teachers</span>
                 </a>
             </li>
-            <li class="nav-item mb-2">
-                <a href="{{ route('courses.index') }}" class="nav-link d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary" title="Manage school courses">
-                    <i class="fas fa-book-open fa-lg me-2 text-info"></i>
-                    <span>Courses</span>
-                </a>
-            </li>
+         <li class="nav-item dropdown mb-2">
+    <a class="nav-link dropdown-toggle d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary"
+       href="#"
+       id="coursesDropdown"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false"
+       title="Manage school courses">
+        <i class="fas fa-book-open fa-lg me-2 text-info"></i>
+        <span>Courses</span>
+    </a>
+    <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="coursesDropdown">
+        <li>
+            <a class="dropdown-item" href="{{ route('courses.create') }}">
+                <i class="fas fa-plus me-2"></i>Add Course
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ route('courses.index') }}">
+                <i class="fas fa-list me-2"></i>Manage Courses
+            </a>
+        </li>
+    </ul>
+</li>
+
            <li class="nav-item dropdown mb-2">
     <a class="nav-link dropdown-toggle d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary"
        href="#"
@@ -59,6 +78,13 @@
                     <i class="fas fa-user-plus fa-lg me-2 text-primary"></i>
                     <span>Enrollments</span>
                 </a>
+                   <li class="nav-item mb-2">
+                <a href="{{ route('subjects.index') }}" class="nav-link d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary" title="Mark attendance">
+                    <i class="fas fa-clipboard-check fa-lg me-2 text-success"></i>
+                    <span>Subjects</span>
+                </a>
+            </li>
+           
             </li>
             <li class="nav-item mb-2">
                 <a href="{{ route('attendances.index') }}" class="nav-link d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary" title="Manage student attendance">
@@ -66,9 +92,36 @@
                     <span>Attendance</span>
                 </a>
             </li>
+            <li class="nav-item dropdown mb-2">
+    <a class="nav-link dropdown-toggle d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary"
+       href="#"
+       id="gradesDropdown"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false"
+       title="Manage school grades">
+        <i class="fas fa-layer-group fa-lg me-2 text-warning"></i>
+        <span>Grades</span>
+    </a>
+    <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="gradesDropdown">
+        <li>
+            <a class="dropdown-item" href="{{ route('grades.create') }}">
+                <i class="fas fa-plus-circle me-2"></i>Add Grade
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ route('grades.index') }}">
+                <i class="fas fa-th-list me-2"></i>Manage Grades
+            </a>
+        </li>
+    </ul>
+</li>
+
         </ul>
 
     @elseif(auth()->user()->role == 'teacher')
+    
+
         <ul class="nav flex-column bg-light p-3 rounded shadow-sm">
             <li class="nav-item mb-2">
                 <a href="{{ route('students.index') }}" class="nav-link d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary" title="View students">
@@ -82,12 +135,31 @@
                     <span>Attendance</span>
                 </a>
             </li>
-            <li class="nav-item mb-2">
-                <a href="{{ route('marks.index') }}" class="nav-link d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary" title="Manage marks and grades">
-                    <i class="fas fa-graduation-cap fa-lg me-2 text-warning"></i>
-                    <span>Marks & Grades</span>
-                </a>
-            </li>
+            <li class="nav-item dropdown mb-2">
+    <a class="nav-link dropdown-toggle d-flex align-items-center text-dark rounded px-3 py-2 hover-bg-primary"
+       href="#"
+       id="gradesDropdown"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false"
+       title="Manage school grades">
+        <i class="fas fa-layer-group fa-lg me-2 text-warning"></i>
+        <span>Grades</span>
+    </a>
+    <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="gradesDropdown">
+        <li>
+            <a class="dropdown-item" href="{{ route('grades.create') }}">
+                <i class="fas fa-plus-circle me-2"></i>Add Grade
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ route('grades.index') }}">
+                <i class="fas fa-th-list me-2"></i>Manage Grades
+            </a>
+        </li>
+    </ul>
+</li>
+            <!--  -->
         </ul>
 
     @elseif(auth()->user()->role == 'student')

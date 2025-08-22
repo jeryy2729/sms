@@ -15,6 +15,11 @@ class AttendancesController extends Controller
         $classes = School_Classes::all();
         return view('attendances.index', compact('classes'));
     }
+    public function mark($class_id, $section_id, $student_id)
+    {
+        $student = Student::with('user')->findOrFail($student_id);
+        return view('attendances.mark', compact('student', 'class_id', 'section_id'));
+    }
 
     public function create()
     {
@@ -31,27 +36,31 @@ public function getStudents($class, $section)
         ->get(['id','user_id','class_id','section_id']);
 
     return response()->json($students);
-}public function store(Request $request)
+}
+public function store(Request $request)
 {
     $request->validate([
-        'class_id' => 'required|exists:school_classes,id',
-        'section_id' => 'required|exists:sections,id',
-        'attendance' => 'required|array',
+        'student_id' => 'required|exists:students,id',
+        'date'       => 'required|date',
+        'status'     => 'required|in:present,absent,late,leave',
     ]);
 
-    foreach ($request->attendance as $studentId => $status) {
-        Attendance::create([
-            'student_id' => $studentId,
-            'class_id' => $request->class_id,
-            'section_id' => $request->section_id, // include this if DB requires
-            'date' => now()->toDateString(),
-            'status' => $status,
-        ]);
-    }
+    $student = Student::findOrFail($request->student_id);
 
-    return redirect()->back()->with('success', 'Attendance saved successfully!');
+    Attendance::updateOrCreate(
+        [
+            'student_id' => $student->id,
+            'date'       => $request->date,
+        ],
+        [
+            'status'     => $request->status,
+            'class_id'   => $student->class_id,
+            'section_id' => $student->section_id,
+        ]
+    );
+
+        return redirect()->route('attendances.index')->with('success', 'Attendance marked successfully.');
 }
-    
     public function showClassAttendance($classId, $sectionId)
 {
     $class = School_Classes::findOrFail($classId);
@@ -66,6 +75,12 @@ public function getStudents($class, $section)
     return view('attendances.class_sheet', compact('class', 'section', 'attendances'));
 }
 
+public function destroy(Attendance $attendance)
+{
+    $attendance->delete();
+
+    return back()->with('success', 'Attendance record deleted successfully.');
+}
 
 
 }

@@ -11,6 +11,10 @@ use App\Http\Controllers\SectionsController;
 use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\AttendancesController;
 use App\Http\Controllers\SubjectsController;
+use App\Http\Controllers\MarksController;
+
+use App\Http\Controllers\GradesController;
+
 use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
@@ -40,15 +44,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 Route::middleware(['auth', 'role:admin,teacher'])->group(function () {
     Route::resource('students', StudentsController::class);
+     Route::get('/{class_id}/{section_id}/{student_id}/mark', [AttendancesController::class, 'mark'])->name('attendances.mark'); // mark single
+
         Route::resource('attendances', AttendancesController::class, );
     Route::post('/load-students', [AttendancesController::class, 'loadStudents'])->name('attendance.load');
-// Route::get('/get-students/{class}', [AttendancesController::class, 'getStudents']);
 Route::get('/get-students/{class}/{section}', [AttendancesController::class, 'getStudents']);
-// Route::get('/attendances/class/{class}', [AttendancesController::class, 'showClassAttendance'])
-//     ->name('attendances.class');
-// Show attendance sheet for a specific class + section
 Route::get('/attendances/class/{class}/{section}', [AttendancesController::class, 'showClassAttendance'])
     ->name('attendances.class');
+    Route::get('/marksheet/{class}/{section}/{student}', [MarksController::class, 'show'])->name('marksheet.show');
+Route::get('marks/create/{student}/{class}/{section}', [MarksController::class, 'create'])->name('marks.create');
+Route::post('marks/store', [MarksController::class, 'store'])->name('marks.store');
+    Route::resource('subjects', SubjectsController::class);
+
+    Route::resource('grades', GradesController::class);
 
 });
 

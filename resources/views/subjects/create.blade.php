@@ -10,6 +10,18 @@
             <label class="form-label">Subject Name</label>
             <input type="text" name="name" class="form-control" required>
         </div>
+<div class="form-group">
+    <label for="class_id">Class</label>
+    <select name="class_id" id="class_id" class="form-control" required>
+        <option value="">-- Select Class --</option>
+        @foreach($classes as $class)
+            <option value="{{ $class->id }}" 
+                {{ old('class_id', $subject->class_id ?? '') == $class->id ? 'selected' : '' }}>
+                {{ $class->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
         <div class="mb-3">
             <label class="form-label">Course</label>

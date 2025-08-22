@@ -11,5 +11,13 @@ class School_Classes extends Model
     protected $table = 'school_classes';
     protected $fillable = ['name'];
 
-    public function sections() { return $this->hasMany(Section::class, 'class_id'); }
+    public function sections()
+     { 
+        return $this->hasMany(Section::class, 'class_id'); 
+    }
+    public function subjects()
+{
+    return $this->belongsToMany(Subject::class, 'class_subject', 'class_id', 'subject_id');
+}
+
 }

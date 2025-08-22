@@ -11,8 +11,10 @@ class StudentsController extends Controller
 {
     public function index()
     {
+                $classes = School_Classes::all();
+
         $students = Student::with(['user', 'schoolClass', 'section'])->get();
-        return view('students.index', compact('students'));
+        return view('students.index', compact('students','classes'));
     }
 
     public function create()

@@ -13,12 +13,17 @@ class Subject extends Model
         'name',
         'course_id',
         'teacher_id',
+'class_id',
     ];
 
     public function course()
     {
         return $this->belongsTo(Course::class, 'course_id');
     }
+public function classes()
+{
+    return $this->belongsToMany(School_Classes::class, 'class_subject', 'subject_id', 'class_id');
+}
 
     public function teacher()
     {

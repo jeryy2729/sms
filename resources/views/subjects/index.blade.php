@@ -11,6 +11,7 @@
                 <th>ID</th>
                 <th>Subject Name</th>
                 <th>Course</th>
+                <th>Class</th>
                 <th>Teacher</th>
                 <th>Action</th>
             </tr>
@@ -21,6 +22,16 @@
                     <td>{{ $subject->id }}</td>
                     <td>{{ $subject->name }}</td>
                     <td>{{ $subject->course->name ?? 'N/A' }}</td>
+<td>
+    @if($subject->classes->count() > 0)
+        @foreach($subject->classes as $class)
+            <span class="badge bg-info text-dark">{{ $class->name }}</span>
+        @endforeach
+    @else
+        N/A
+    @endif
+</td>
+           
                     <td>{{ $subject->teacher->user->name ?? 'N/A' }}</td>
                     <td>
                         <a href="{{ route('subjects.edit', $subject) }}" class="btn btn-warning btn-sm">Edit</a>

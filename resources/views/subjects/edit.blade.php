@@ -11,6 +11,18 @@
             <label class="form-label">Subject Name</label>
             <input type="text" name="name" class="form-control" value="{{ $subject->name }}" required>
         </div>
+<div class="form-group">
+    <label for="class_id">Classes</label>
+    <select name="class_id[]" id="class_id" class="form-control" multiple required>
+        @foreach($classes as $class)
+            <option value="{{ $class->id }}"
+                {{ in_array($class->id, $subject->classes->pluck('id')->toArray()) ? 'selected' : '' }}>
+                {{ $class->name }}
+            </option>
+        @endforeach
+    </select>
+    <small class="text-muted">Hold CTRL (Windows) or CMD (Mac) to select multiple classes</small>
+</div>
 
         <div class="mb-3">
             <label class="form-label">Course</label>
