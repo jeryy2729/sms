@@ -11,6 +11,7 @@
             <th>Student Name</th>
             <th>Status (Today)</th>
             <th>Actions</th>
+            <th>Mark Sheet</th>
         </tr>
     </thead>
     <tbody>

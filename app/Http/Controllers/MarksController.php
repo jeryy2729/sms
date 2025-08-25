@@ -17,30 +17,43 @@ class MarksController extends Controller
     }
 
     // Store marks
-    public function store(Request $request)
-    {
-        $request->validate([
-            'student_id' => 'required',
-            'class_id' => 'required',
-            'section_id' => 'required',
-            'subject_id' => 'required|array',
-            'marks_obtained' => 'required|array',
-            'total_marks' => 'required|array',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'student_id' => 'required',
+        'class_id' => 'required',
+        'section_id' => 'required',
+        'subject_id' => 'required|array',
+        'marks_obtained' => 'required|array',
+        'total_marks' => 'required|array',
+    ]);
 
-        foreach ($request->subject_id as $key => $subjectId) {
-            Mark::create([
-                'student_id'     => $request->student_id,
-                'class_id'       => $request->class_id,
-                'section_id'     => $request->section_id,
-                'subject_id'     => $subjectId,
-                'marks_obtained' => $request->marks_obtained[$key],
-                'total_marks'    => $request->total_marks[$key],
-            ]);
+    foreach ($request->subject_id as $key => $subjectId) {
+        // ✅ Check if marks already exist for this student + class + section + subject
+        $exists = Mark::where('student_id', $request->student_id)
+            ->where('class_id', $request->class_id)
+            ->where('section_id', $request->section_id)
+            ->where('subject_id', $subjectId)
+            ->exists();
+
+        if ($exists) {
+            // Skip or throw error
+            return redirect()->back()->with('error', 'Marks for this subject already exist for this student!');
         }
 
-        return redirect()->back()->with('success', 'Marks saved successfully!');
+        // If not exists, insert
+        Mark::create([
+            'student_id'     => $request->student_id,
+            'class_id'       => $request->class_id,
+            'section_id'     => $request->section_id,
+            'subject_id'     => $subjectId,
+            'marks_obtained' => $request->marks_obtained[$key],
+            'total_marks'    => $request->total_marks[$key],
+        ]);
     }
+
+    return redirect()->back()->with('success', 'Marks saved successfully!');
+}
 
     public function show($classId, $sectionId, $studentId)
     {

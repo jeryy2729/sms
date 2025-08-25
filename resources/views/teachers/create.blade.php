@@ -56,6 +56,28 @@
             <label for="join_date" class="form-label">Join Date</label>
             <input type="date" name="join_date" id="join_date" class="form-control" required>
         </div>
+  <h4>Address Information</h4>
+        <div class="mb-3">
+            <label>City</label>
+            <input type="text" name="city" class="form-control" required>
+        </div>
+         <div class="mb-3">
+            <label>Country</label>
+            <input type="text" name="country" class="form-control" required>
+        </div>
+   <div class="mb-3">
+            <label>Postal Code</label>
+            <input type="text" name="postal_code" class="form-control" required>
+        </div>
+         <div class="mb-3">
+            <label>Street</label>
+            <input type="text" name="street" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>State</label>
+            <input type="text" name="state" class="form-control" required>
+        </div>
 
         <button type="submit" class="btn btn-primary">Save Teacher</button>
         <a href="{{ route('teachers.index') }}" class="btn btn-secondary">Cancel</a>

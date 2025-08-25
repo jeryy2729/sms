@@ -16,7 +16,7 @@ class Student extends Model
         'dob',
         'gender',
         'phone_no',
-        'address',
+    
     ];
 
     public function user() {
@@ -30,4 +30,9 @@ class Student extends Model
     public function section() {
         return $this->belongsTo(Section::class, 'section_id');
     }
+        public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
+    }
+
 }

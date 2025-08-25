@@ -14,6 +14,12 @@ class UsersController extends Controller
         return view('users.index', compact('users'));
     }
 
+public function show($id)
+{
+    // You can leave it empty or redirect
+    return redirect()->route('users.index');
+}
+
     public function create()
     {
         return view('users.create');

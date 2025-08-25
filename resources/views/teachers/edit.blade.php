@@ -43,6 +43,32 @@
             <input type="date" name="join_date" value="{{ $teacher->join_date }}" class="form-control" required>
         </div>
 
+
+        {{-- Address (Polymorphic) --}}
+         <div class="mb-3">
+    <label>Country</label>
+    <input type="text" name="country" value="{{ $student->address->country ?? '' }}" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label>Street</label>
+    <input type="text" name="street" value="{{ $student->address->street ?? '' }}" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label>City</label>
+    <input type="text" name="city" value="{{ $student->address->city ?? '' }}" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label>State</label>
+    <input type="text" name="state" value="{{ $student->address->state ?? '' }}" class="form-control">
+</div>
+
+<div class="mb-3">
+    <label>Postal Code</label>
+    <input type="text" name="postal_code" value="{{ $student->address->postal_code ?? '' }}" class="form-control">
+</div>
         <button type="submit" class="btn btn-success">Update Teacher</button>
     </form>
 </div>

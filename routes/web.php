@@ -12,9 +12,8 @@ use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\AttendancesController;
 use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\MarksController;
-
+use App\Http\Controllers\AddressesController;
 use App\Http\Controllers\GradesController;
-
 use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
@@ -31,6 +30,24 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('subjects', SubjectsController::class);
     Route::resource('classes', ClassesController::class);
         Route::resource('students', StudentsController::class);
+
+// List all addresses
+Route::get('addresses', [AddressesController::class, 'index'])->name('addresses.index');
+
+// Create address form for a specific user
+Route::get('addresses/create/{type}/{userId}', [AddressesController::class, 'create'])->name('addresses.create');
+
+// Store address
+Route::post('addresses/store', [AddressesController::class, 'store'])->name('addresses.store');
+
+// Edit address form
+Route::get('addresses/{address}/edit', [AddressesController::class, 'edit'])->name('addresses.edit');
+
+// Update address
+Route::put('addresses/{address}', [AddressesController::class, 'update'])->name('addresses.update');
+
+// Delete address
+Route::delete('addresses/{address}', [AddressesController::class, 'destroy'])->name('addresses.destroy');
 
     Route::resource('sections', SectionsController::class);
     Route::resource('courses', CoursesController::class);
