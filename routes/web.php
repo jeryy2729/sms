@@ -15,6 +15,7 @@ use App\Http\Controllers\MarksController;
 use App\Http\Controllers\AddressesController;
 use App\Http\Controllers\GradesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -76,10 +77,14 @@ Route::post('marks/store', [MarksController::class, 'store'])->name('marks.store
     Route::resource('grades', GradesController::class);
 
 });
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 // Student-only routes
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/student/profile', [StudentsController::class, 'myProfile'])->name('student.profile');
